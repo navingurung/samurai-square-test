@@ -205,9 +205,8 @@ volumes:
 
 - Run Docker
 ```bash
-docker compouse up -d build
+docker compose up -d --build```
 ```
-
 - Confirm it works
 ```bash
 Frontend → http://localhost:3000
