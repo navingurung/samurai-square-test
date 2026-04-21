@@ -150,3 +150,67 @@ SQUARE_BASE_URL=https://connect.squareupsandbox.com
 
 FRONTEND_URL=http://localhost:3000
 ```
+
+- Create root `docker-compose-yml`
+
+```yml
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: samurai_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: samurai_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: samurai_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: samurai_tax
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+
+- Run Docker
+```bash
+docker compouse up -d build
+```
+
+- Confirm it works
+```bash
+Frontend → http://localhost:3000
+Backend → http://localhost:8000
+Health → http://localhost:8000/api/health
+```
