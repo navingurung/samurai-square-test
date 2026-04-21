@@ -151,7 +151,7 @@ SQUARE_BASE_URL=https://connect.squareupsandbox.com
 FRONTEND_URL=http://localhost:3000
 ```
 
-- Create root `docker-compose-yml`
+- Create root `docker-compose.yml`
 
 ```yml
 version: "3.9"
