@@ -221,4 +221,24 @@ Health → http://localhost:8000/api/health
 ├── backend/
 ├── docker-compose.yml
 └── .env
+
+project/
+├── frontend/
+│   ├── app/
+│   ├── components/
+│   └── lib/
+│
+└── backend/
+    ├── app/
+    │   ├── api/
+    │   │   └── square_oauth.py
+    │   ├── core/
+    │   │   ├── config.py
+    │   │   └── square.py
+    │   ├── services/
+    │   │   └── token_store.py
+    │   └── main.py
+    └── requirements.txt
+
+
 ```
