@@ -216,8 +216,10 @@ Health → http://localhost:8000/api/health
 ```
 
 - Folder Structure
+```bash
   samurai-square-test/
 ├── frontend/
 ├── backend/
 ├── docker-compose.yml
 └── .env
+```
