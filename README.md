@@ -11,7 +11,7 @@ npx create-next-app@latest .
 
 
 
-2. shadcn + FastAPI + Docker compose final setup
+2. Shadcn Install
 
   - 2.1 Install Shadcn in frontend
    ```bash
@@ -36,7 +36,7 @@ npx shadcn@latest add button card input switch badge textarea
 ```
 
 
-- 2.2 Setup Backend(/backend)
+3. Setup Backend(/backend)
 ```bash
 cd backend
 ```
@@ -103,4 +103,50 @@ http://localhost:8000
 - Output
 ```json
 {"status":"ok"}
+```
+
+4. Docker compose final setup
+- Create frontend/Dockerfile
+```dockerfile
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+```
+
+- Create backend/Dockerfile
+```docker
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+```
+- Create root `.env`
+
+```env
+DATABASE_URL=postgresql://postgres:postgres@db:5432/samurai_tax
+
+SQUARE_ENV=sandbox
+SQUARE_CLIENT_ID=YOUR_SQUARE_SANDBOX_CLIENT_ID
+SQUARE_CLIENT_SECRET=YOUR_SQUARE_SANDBOX_CLIENT_SECRET
+SQUARE_REDIRECT_URI=http://localhost:8000/api/square/oauth/callback
+SQUARE_BASE_URL=https://connect.squareupsandbox.com
+
+FRONTEND_URL=http://localhost:3000
 ```
